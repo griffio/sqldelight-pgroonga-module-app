@@ -36,24 +36,9 @@ class PGroongaModule : SqlDelightModule {
 //// Change to inheritance so that definitionType can be called by polymorphism - not possible with delegation
 class PGroongaTypeResolver(private val parentResolver: TypeResolver) : PostgreSqlTypeResolver(parentResolver) {
 
-//    override fun definitionType(typeName: SqlTypeName): IntermediateType {
-//        return when (typeName) {
-//            is Bm25TypeName -> IntermediateType(Bm25VectorSqlType.BM25VECTOR)
-//            else -> super.definitionType(typeName)
-//        }
-//    }
-//
-
-
     override fun resolvedType(expr: SqlExpr) : IntermediateType {
         return if (expr is PGroonaExtensionExpr && expr.pgroonaOperatorExpression != null)
             IntermediateType(PrimitiveType.BOOLEAN) else super.resolvedType(expr)
     }
-//
-//    override fun functionType(functionExpr: SqlFunctionExpr): IntermediateType? =
-//        when (functionExpr.functionName.text.lowercase()) {
-//            "tokenize" -> IntermediateType(Bm25VectorSqlType.BM25VECTOR)
-//            "to_bm25query" -> IntermediateType(Bm25VectorSqlType.BM25VECTOR)
-//            else -> super.functionType(functionExpr)
-//        }
+
 }
