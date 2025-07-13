@@ -1,0 +1,59 @@
+package griffio
+
+import app.cash.sqldelight.dialect.api.IntermediateType
+import app.cash.sqldelight.dialect.api.PrimitiveType
+import app.cash.sqldelight.dialect.api.SqlDelightModule
+import app.cash.sqldelight.dialect.api.TypeResolver
+import app.cash.sqldelight.dialects.postgresql.PostgreSqlTypeResolver
+import app.cash.sqldelight.dialects.postgresql.grammar.PostgreSqlParser
+import app.cash.sqldelight.dialects.postgresql.grammar.PostgreSqlParserUtil
+import com.alecstrong.sql.psi.core.psi.SqlExpr
+import com.intellij.lang.parser.GeneratedParserUtilBase
+import griffio.grammar.PgroongaParser
+import griffio.grammar.PgroongaParserUtil
+import griffio.grammar.psi.PGroonaExtensionExpr
+
+class PGroongaModule : SqlDelightModule {
+    override fun typeResolver(parentResolver: TypeResolver): TypeResolver = PGroongaTypeResolver(parentResolver)
+
+    override fun setup() {
+        PgroongaParserUtil.reset()
+        PgroongaParserUtil.overridePostgreSqlParser()
+        // As the grammar doesn't support inheritance - override type_name manually to try inherited type_name
+        PostgreSqlParserUtil.extension_expr = GeneratedParserUtilBase.Parser { psiBuilder, i ->
+            PgroongaParserUtil.extension_expr?.parse(psiBuilder, i) ?: PgroongaParser.extension_expr_real(psiBuilder, i)
+                    || PostgreSqlParser.extension_expr_real(psiBuilder, i)
+        }
+
+        // etc
+        PostgreSqlParserUtil.index_method = GeneratedParserUtilBase.Parser { psiBuilder, i ->
+            PgroongaParserUtil.index_method?.parse(psiBuilder, i) ?: PgroongaParser.index_method_real(psiBuilder, i)
+                    || PostgreSqlParser.index_method_real(psiBuilder, i)
+        }
+    }
+}
+
+//// Change to inheritance so that definitionType can be called by polymorphism - not possible with delegation
+class PGroongaTypeResolver(private val parentResolver: TypeResolver) : PostgreSqlTypeResolver(parentResolver) {
+
+//    override fun definitionType(typeName: SqlTypeName): IntermediateType {
+//        return when (typeName) {
+//            is Bm25TypeName -> IntermediateType(Bm25VectorSqlType.BM25VECTOR)
+//            else -> super.definitionType(typeName)
+//        }
+//    }
+//
+
+
+    override fun resolvedType(expr: SqlExpr) : IntermediateType {
+        return if (expr is PGroonaExtensionExpr && expr.pgroonaOperatorExpression != null)
+            IntermediateType(PrimitiveType.BOOLEAN) else super.resolvedType(expr)
+    }
+//
+//    override fun functionType(functionExpr: SqlFunctionExpr): IntermediateType? =
+//        when (functionExpr.functionName.text.lowercase()) {
+//            "tokenize" -> IntermediateType(Bm25VectorSqlType.BM25VECTOR)
+//            "to_bm25query" -> IntermediateType(Bm25VectorSqlType.BM25VECTOR)
+//            else -> super.functionType(functionExpr)
+//        }
+}
