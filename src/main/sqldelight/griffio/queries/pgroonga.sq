@@ -1,0 +1,17 @@
+insertMemo:
+INSERT INTO Memos (id, content) VALUES ?;
+
+searchMemos:
+SELECT * FROM Memos WHERE content &@ :search::TEXT;
+
+insertScoreMemo:
+INSERT INTO ScoreMemos (id, content) VALUES ?;
+
+searchScoreMemos:
+SELECT *, pgroonga_score(tableoid, ctid) AS score
+FROM ScoreMemos
+WHERE content &@ 'PGroonga' OR content &@ 'PostgreSQL';
+
+insertSampleText:
+INSERT INTO SampleTexts (id, content) VALUES ?;
+

@@ -1,0 +1,23 @@
+CREATE EXTENSION IF NOT EXISTS pgroonga;
+
+CREATE TABLE Memos (
+  id INTEGER,
+  content TEXT
+);
+
+CREATE INDEX pgroonga_content_index ON Memos USING pgroonga (content);
+
+CREATE TABLE ScoreMemos (
+  id integer PRIMARY KEY,
+  content text
+);
+
+CREATE INDEX pgroonga_score_memos_content_index ON ScoreMemos USING pgroonga (content);
+
+CREATE TABLE SampleTexts (
+  id INTEGER PRIMARY KEY,
+  content TEXT
+);
+
+CREATE INDEX pgroonga_sample_content_index ON SampleTexts USING pgroonga (content);
+
