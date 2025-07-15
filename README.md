@@ -8,6 +8,24 @@ Pgroonga https://pgroonga.github.io/
 
 Use with SqlDelight `2.1.0`
 
+```sql
+
+CREATE EXTENSION IF NOT EXISTS pgroonga;
+
+CREATE TABLE Memos (
+  id INTEGER,
+  content TEXT
+);
+
+CREATE INDEX pgroonga_content_index ON Memos USING pgroonga (content)
+        WITH (tokenizer='TokenNgram("report_source_location", true)', normalizer='NormalizerNFKC100');
+
+searchScoreMemos:
+SELECT *, pgroonga_score(tableoid, ctid) AS score
+FROM ScoreMemos
+WHERE content &@ 'PGroonga' OR content &@ 'PostgreSQL';
+```
+
 TODO
 
 * Add functions `pgroonga_highlight_html` `pgroonga_query_extract_keywords` `pgroonga_score`
