@@ -18,3 +18,6 @@ INSERT INTO SampleTexts (id, content) VALUES ?;
 searchHighlightHtml:
 SELECT pgroonga_highlight_html(content, :keywords::TEXT[]) AS highlight_html
 FROM Memos;
+
+selectExtractKeywords:
+SELECT UNNEST(pgroonga_query_extract_keywords(:keywords::TEXT)) AS query_extract_keywords;

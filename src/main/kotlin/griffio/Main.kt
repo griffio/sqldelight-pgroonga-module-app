@@ -25,6 +25,7 @@ fun main() {
     sample.pgroongaQueries.searchMemos("engine").executeAsList().forEach(::println)
     println("----pgroonga_highlight_html----")
     sample.pgroongaQueries.searchHighlightHtml(arrayOf("Groonga", "PostgreSQL")).executeAsList().forEach(::println)
-
+    println("----pgroonga_query_extract_keywords----")
+    sample.pgroongaQueries.selectExtractKeywords("Groonga (MySQL OR PostgreSQL)").executeAsList().forEach(::println)
 
 }
