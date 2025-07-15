@@ -4,10 +4,12 @@ import app.cash.sqldelight.dialect.api.IntermediateType
 import app.cash.sqldelight.dialect.api.PrimitiveType
 import app.cash.sqldelight.dialect.api.SqlDelightModule
 import app.cash.sqldelight.dialect.api.TypeResolver
+import app.cash.sqldelight.dialects.postgresql.PostgreSqlType
 import app.cash.sqldelight.dialects.postgresql.PostgreSqlTypeResolver
 import app.cash.sqldelight.dialects.postgresql.grammar.PostgreSqlParser
 import app.cash.sqldelight.dialects.postgresql.grammar.PostgreSqlParserUtil
 import com.alecstrong.sql.psi.core.psi.SqlExpr
+import com.alecstrong.sql.psi.core.psi.SqlFunctionExpr
 import com.intellij.lang.parser.GeneratedParserUtilBase
 import griffio.grammar.PgroongaParser
 import griffio.grammar.PgroongaParserUtil
@@ -41,4 +43,9 @@ class PGroongaTypeResolver(private val parentResolver: TypeResolver) : PostgreSq
             IntermediateType(PrimitiveType.BOOLEAN) else super.resolvedType(expr)
     }
 
+    override fun functionType(functionExpr: SqlFunctionExpr): IntermediateType? =
+        when (functionExpr.functionName.text.lowercase()) {
+            "pgroonga_score" -> IntermediateType(PrimitiveType.REAL)
+            else -> super.functionType(functionExpr)
+        }
 }
