@@ -35,11 +35,15 @@ WHERE content &@ 'PGroonga' OR content &@ 'PostgreSQL';
 searchHighlightHtml:
 SELECT pgroonga_highlight_html(content, :keywords::TEXT[]) AS highlight_html
 FROM Memos;
+
+selectExtractKeywords:
+SELECT UNNEST(pgroonga_query_extract_keywords(:keywords::TEXT)) AS query_extract_keywords;
 ```
+
+* Add functions `pgroonga_highlight_html` `pgroonga_query_extract_keywords` `pgroonga_score`
 
 TODO
 
-* Add functions `pgroonga_highlight_html` `pgroonga_query_extract_keywords` `pgroonga_score`
 * Needs to support `pgroonga_score` with system columns `tableoid, ctid`
   https://github.com/sqldelight/sqldelight/pull/5834
 
