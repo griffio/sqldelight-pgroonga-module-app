@@ -11,6 +11,7 @@ import app.cash.sqldelight.dialects.postgresql.grammar.PostgreSqlParserUtil
 import com.alecstrong.sql.psi.core.psi.SqlExpr
 import com.alecstrong.sql.psi.core.psi.SqlFunctionExpr
 import com.intellij.lang.parser.GeneratedParserUtilBase
+import com.intellij.lang.parser.GeneratedParserUtilBase.Parser
 import griffio.grammar.PgroongaParser
 import griffio.grammar.PgroongaParserUtil
 import griffio.grammar.psi.PGroonaExtensionExpr
@@ -31,6 +32,16 @@ class PGroongaModule : SqlDelightModule {
         PostgreSqlParserUtil.index_method = GeneratedParserUtilBase.Parser { psiBuilder, i ->
             PgroongaParserUtil.index_method?.parse(psiBuilder, i) ?: PgroongaParser.index_method_real(psiBuilder, i)
                     || PostgreSqlParser.index_method_real(psiBuilder, i)
+        }
+
+        PostgreSqlParserUtil.storage_parameters = Parser { psiBuilder, i ->
+            PgroongaParserUtil.storage_parameters?.parse(psiBuilder, i) ?: PgroongaParser.storage_parameters_real(psiBuilder, i)
+                    || PostgreSqlParser.storage_parameters_real(psiBuilder, i)
+        }
+
+        PostgreSqlParserUtil.storage_parameter = Parser { psiBuilder, i ->
+            PgroongaParserUtil.storage_parameter?.parse(psiBuilder, i) ?: PgroongaParser.storage_parameter_real(psiBuilder, i)
+                    || PostgreSqlParser.storage_parameter_real(psiBuilder, i)
         }
     }
 }

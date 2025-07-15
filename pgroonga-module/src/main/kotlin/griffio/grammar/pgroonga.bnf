@@ -40,3 +40,12 @@ index_method ::= 'PGROONGA' {
   implements = "app.cash.sqldelight.dialects.postgresql.grammar.psi.PostgreSqlIndexMethod"
 }
 
+storage_parameters ::= 'tokenizer' | 'normalizer' {
+  extends = "app.cash.sqldelight.dialects.postgresql.grammar.psi.impl.PostgreSqlStorageParametersImpl"
+  implements = "app.cash.sqldelight.dialects.postgresql.grammar.psi.PostgreSqlStorageParameters"
+}
+
+storage_parameter ::= {string_literal} {
+  extends = "app.cash.sqldelight.dialects.postgresql.grammar.psi.impl.PostgreSqlStorageParametersImpl"
+  implements = "app.cash.sqldelight.dialects.postgresql.grammar.psi.PostgreSqlStorageParameters"
+}
