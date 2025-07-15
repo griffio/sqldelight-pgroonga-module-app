@@ -5,7 +5,8 @@ CREATE TABLE Memos (
   content TEXT
 );
 
-CREATE INDEX pgroonga_content_index ON Memos USING pgroonga (content);
+CREATE INDEX pgroonga_content_index ON Memos USING pgroonga (content)
+        WITH (tokenizer='TokenNgram("report_source_location", true)', normalizer='NormalizerNFKC100');
 
 CREATE TABLE ScoreMemos (
   id integer PRIMARY KEY,
