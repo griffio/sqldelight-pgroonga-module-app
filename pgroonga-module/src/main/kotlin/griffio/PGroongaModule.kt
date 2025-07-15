@@ -57,6 +57,7 @@ class PGroongaTypeResolver(private val parentResolver: TypeResolver) : PostgreSq
     override fun functionType(functionExpr: SqlFunctionExpr): IntermediateType? =
         when (functionExpr.functionName.text.lowercase()) {
             "pgroonga_score" -> IntermediateType(PrimitiveType.REAL)
+            "pgroonga_highlight_html" -> IntermediateType(PrimitiveType.TEXT)
             else -> super.functionType(functionExpr)
         }
 }
