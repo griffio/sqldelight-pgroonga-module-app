@@ -23,6 +23,8 @@ fun main() {
     sample.pgroongaQueries.insertMemo(Memos(Random.nextInt(), "PostgreSQL is a relational database management system."))
 
     sample.pgroongaQueries.searchMemos("engine").executeAsList().forEach(::println)
+    println("----pgroonga_highlight_html----")
+    sample.pgroongaQueries.searchHighlightHtml(arrayOf("Groonga", "PostgreSQL")).executeAsList().forEach(::println)
 
 
 }

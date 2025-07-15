@@ -15,3 +15,6 @@ WHERE content &@ 'PGroonga' OR content &@ 'PostgreSQL';
 insertSampleText:
 INSERT INTO SampleTexts (id, content) VALUES ?;
 
+searchHighlightHtml:
+SELECT pgroonga_highlight_html(content, :keywords::TEXT[]) AS highlight_html
+FROM Memos;

@@ -24,6 +24,10 @@ searchScoreMemos:
 SELECT *, pgroonga_score(tableoid, ctid) AS score
 FROM ScoreMemos
 WHERE content &@ 'PGroonga' OR content &@ 'PostgreSQL';
+
+searchHighlightHtml:
+SELECT pgroonga_highlight_html(content, :keywords::TEXT[]) AS highlight_html
+FROM Memos;
 ```
 
 TODO
