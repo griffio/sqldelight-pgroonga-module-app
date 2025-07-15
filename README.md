@@ -20,6 +20,13 @@ CREATE TABLE Memos (
 CREATE INDEX pgroonga_content_index ON Memos USING pgroonga (content)
         WITH (tokenizer='TokenNgram("report_source_location", true)', normalizer='NormalizerNFKC100');
 
+CREATE TABLE ScoreMemos (
+  id integer PRIMARY KEY,
+  content text
+);
+
+CREATE INDEX pgroonga_score_memos_content_index ON ScoreMemos USING pgroonga (content);
+
 searchScoreMemos:
 SELECT *, pgroonga_score(tableoid, ctid) AS score
 FROM ScoreMemos
