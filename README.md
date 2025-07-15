@@ -11,7 +11,8 @@ Use with SqlDelight `2.1.0`
 TODO
 
 * Add functions `pgroonga_highlight_html` `pgroonga_query_extract_keywords` `pgroonga_score`
-* Needs to support `pgroonga_score` with system columns `tableoid, ctid` 
+* Needs to support `pgroonga_score` with system columns `tableoid, ctid`
+  https://github.com/sqldelight/sqldelight/pull/5834
 
 ---
 
