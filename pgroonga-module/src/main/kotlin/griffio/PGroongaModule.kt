@@ -1,5 +1,6 @@
 package griffio
 
+import app.cash.sqldelight.dialect.api.DialectType
 import app.cash.sqldelight.dialect.api.IntermediateType
 import app.cash.sqldelight.dialect.api.PrimitiveType
 import app.cash.sqldelight.dialect.api.SqlDelightModule
@@ -12,6 +13,9 @@ import com.alecstrong.sql.psi.core.psi.SqlExpr
 import com.alecstrong.sql.psi.core.psi.SqlFunctionExpr
 import com.intellij.lang.parser.GeneratedParserUtilBase
 import com.intellij.lang.parser.GeneratedParserUtilBase.Parser
+import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.asTypeName
 import griffio.grammar.PgroongaParser
 import griffio.grammar.PgroongaParserUtil
 import griffio.grammar.psi.PGroonaExtensionExpr
@@ -58,6 +62,7 @@ class PGroongaTypeResolver(private val parentResolver: TypeResolver) : PostgreSq
         when (functionExpr.functionName.text.lowercase()) {
             "pgroonga_score" -> IntermediateType(PrimitiveType.REAL)
             "pgroonga_highlight_html" -> IntermediateType(PrimitiveType.TEXT)
+            "pgroonga_query_extract_keywords" -> arrayIntermediateType(IntermediateType(PrimitiveType.TEXT))
             else -> super.functionType(functionExpr)
         }
 }
