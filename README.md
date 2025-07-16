@@ -46,6 +46,7 @@ TODO
 
 * Needs to support `pgroonga_score` with system columns `tableoid, ctid`
   https://github.com/sqldelight/sqldelight/pull/5834
+* Support array type function return https://github.com/sqldelight/sqldelight/pull/5835
 * Add BinaryOperator mixin - currently need to cast bind param `SELECT * FROM Memos WHERE content &@ :search::TEXT;`
 ---
 
