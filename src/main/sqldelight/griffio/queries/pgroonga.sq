@@ -2,7 +2,7 @@ insertMemo:
 INSERT INTO Memos (id, content) VALUES ?;
 
 searchMemos:
-SELECT * FROM Memos WHERE content &@ :search::TEXT;
+SELECT * FROM Memos WHERE content &@ :search;
 
 insertScoreMemo:
 INSERT INTO ScoreMemos (id, content) VALUES ?;

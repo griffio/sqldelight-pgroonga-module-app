@@ -24,9 +24,12 @@
 
 private sql_column_expr ::= <<columnExprExt <<column_expr_real>>>>
 
-pgroona_operator ::= '&@' | '&@~'
+pgroona_operator ::= '&@' | '&@~' {
+    mixin = "griffio.grammar.mixins.app.cash.sqldelight.dialects.postgresql.grammar.mixins.PGroongaOperatorMixin"
+}
 
 pgroona_operator_expression ::= sql_column_expr pgroona_operator <<expr '-1'>> {
+  mixin = "griffio.grammar.mixins.app.cash.sqldelight.dialects.postgresql.grammar.mixins.PGroongaOperatorExpressionMixin"
   pin = 2
 }
 
