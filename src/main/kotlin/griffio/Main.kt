@@ -2,7 +2,6 @@ package griffio
 
 import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import griffio.migrations.Memos
-import griffio.migrations.SampleTexts
 import griffio.queries.Sample
 import org.postgresql.ds.PGSimpleDataSource
 import kotlin.random.Random
@@ -27,5 +26,4 @@ fun main() {
     sample.pgroongaQueries.searchHighlightHtml(arrayOf("Groonga", "PostgreSQL")).executeAsList().forEach(::println)
     println("----pgroonga_query_extract_keywords----")
     sample.pgroongaQueries.selectExtractKeywords("Groonga (MySQL OR PostgreSQL)").executeAsList().forEach(::println)
-
 }
