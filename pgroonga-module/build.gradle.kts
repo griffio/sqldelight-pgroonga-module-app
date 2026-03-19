@@ -9,6 +9,8 @@ version = "0.0.1"
 group = "io.github.griffio"
 
 repositories {
+   // mavenLocal()
+    maven(url = "https://central.sonatype.com/repository/maven-snapshots/")
     mavenCentral()
     gradlePluginPortal()
     maven("https://cache-redirector.jetbrains.com/download-pgp-verifier")

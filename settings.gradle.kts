@@ -1,5 +1,7 @@
 pluginManagement {
     repositories {
+ //       mavenLocal()
+        maven(url = "https://central.sonatype.com/repository/maven-snapshots/")
         mavenCentral()
         gradlePluginPortal()
     }
@@ -14,7 +16,7 @@ rootProject.name = "sqldelight-pgroonga-app"
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
-            val vSqlDelight = "2.1.0"
+            val vSqlDelight = "2.4.0-SNAPSHOT"
             val vIntellij = "231.9392.1"
             version("intellij", vIntellij)
             plugin("kotlin", "org.jetbrains.kotlin.jvm").version("2.1.0")
