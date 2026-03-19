@@ -6,7 +6,7 @@ https://github.com/cashapp/sqldelight
 
 Pgroonga https://pgroonga.github.io/
 
-Use with SqlDelight `2.1.0`
+Use with SqlDelight `2.4.0-SNAPSHOT`
 
 ```sql
 
@@ -45,8 +45,10 @@ SELECT UNNEST(pgroonga_query_extract_keywords(:keywords::TEXT)) AS query_extract
 TODO
 
 * Needs to support `pgroonga_score` with system columns `tableoid, ctid`
-  https://github.com/sqldelight/sqldelight/pull/5834
-* Support array type function return https://github.com/sqldelight/sqldelight/pull/5835
+  * MERGED https://github.com/sqldelight/sqldelight/pull/5834
+* Support array type function return
+  * MERGED https://github.com/sqldelight/sqldelight/pull/5835
+
 ---
 
 ```shell
@@ -56,5 +58,10 @@ docker run \
   -e POSTGRES_DB=PGroonga \
   -e POSTGRES_USER=PGroonga \
   -p 5432:5432 \
-  -d groonga/pgroonga:4.0.1-alpine-16-slim
+  -d groonga/pgroonga:4.0.5-alpine-16-slim
+```
+
+```shell
+./gradlew build &&
+./gradlew flywayMigrate
 ```
