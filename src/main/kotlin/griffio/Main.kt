@@ -2,6 +2,7 @@ package griffio
 
 import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import griffio.migrations.Memos
+import griffio.migrations.ScoreMemos
 import griffio.queries.Sample
 import org.postgresql.ds.PGSimpleDataSource
 import kotlin.random.Random
@@ -26,4 +27,11 @@ fun main() {
     sample.pgroongaQueries.searchHighlightHtml(arrayOf("Groonga", "PostgreSQL")).executeAsList().forEach(::println)
     println("----pgroonga_query_extract_keywords----")
     sample.pgroongaQueries.selectExtractKeywords("Groonga (MySQL OR PostgreSQL)").executeAsList().forEach(::println)
+
+    sample.pgroongaQueries.insertScoreMemo(ScoreMemos(Random.nextInt(), "PostgreSQL is a relational database management system."))
+    sample.pgroongaQueries.insertScoreMemo(ScoreMemos(Random.nextInt(), "PGroonga is a PostgreSQL extension that uses Groonga as index."))
+    sample.pgroongaQueries.insertScoreMemo(ScoreMemos(Random.nextInt(), "Some content so that matches are scored"))
+    sample.pgroongaQueries.insertScoreMemo(ScoreMemos(Random.nextInt(), "Other stuff to score the content"))
+    println("----pgroonga_score----")
+    sample.pgroongaQueries.searchScoreMemos().executeAsList().forEach(::println)
 }
