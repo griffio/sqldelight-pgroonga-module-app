@@ -21,3 +21,7 @@ FROM Memos;
 
 selectExtractKeywords:
 SELECT UNNEST(pgroonga_query_extract_keywords(:keywords::TEXT)) AS query_extract_keywords;
+
+insertMemos {
+    INSERT INTO Memos (id, content) VALUES (:id, :content);
+}
